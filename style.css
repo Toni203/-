@@ -1,0 +1,631 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #0B3B5C;
+    --color-secondary: #2C7DA0;
+    --color-accent: #4CB5AB;
+    --color-background: #F4F9FC;
+    --color-surface: #FFFFFF;
+    --color-text-primary: #1A2E3F;
+    --color-text-secondary: #4A6476;
+    --color-border: #D9E4EC;
+    --color-success: #2E7D32;
+    --color-error: #C62828;
+
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-headings: 'Roboto Slab', 'Times New Roman', serif;
+
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(11, 59, 92, 0.08);
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    line-height: 1.5;
+    font-size: 16px;
+    font-weight: 400;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === ТИПОГРАФИКА И ИЕРАРХИЯ === */
+h1, h2, h3, h4 {
+    font-family: var(--font-headings);
+    font-weight: 500;
+    color: var(--color-primary);
+    line-height: 1.2;
+    margin-bottom: var(--space-sm);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: var(--font-main);
+}
+
+p {
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-secondary);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* === КОНТЕЙНЕР === */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+    width: 100%;
+}
+
+/* === ХЕДЕР === */
+header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-sm) 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--box-shadow);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.logo h2 {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    color: var(--color-primary);
+}
+
+.logo p {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+}
+
+nav a {
+    font-weight: 500;
+    padding: var(--space-xs) 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+nav a:hover {
+    border-bottom-color: var(--color-accent);
+}
+
+nav a.active {
+    border-bottom-color: var(--color-primary);
+    font-weight: 600;
+}
+
+.btn-appointment {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.6rem var(--space-md);
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-appointment:hover {
+    background-color: var(--color-secondary);
+}
+
+/* === ОСНОВНОЙ КОНТЕНТ === */
+main {
+    flex: 1;
+    padding: var(--space-xl) 0;
+}
+
+/* === ФУТЕР === */
+footer {
+    background-color: var(--color-primary);
+    color: rgba(255, 255, 255, 0.8);
+    padding: var(--space-lg) 0;
+    margin-top: auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+}
+
+.footer-col h4 {
+    color: white;
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-headings);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col li {
+    margin-bottom: var(--space-xs);
+}
+
+.footer-col a {
+    transition: opacity 0.2s;
+}
+
+.footer-col a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.875rem;
+}
+
+/* === КОМПОНЕНТЫ === */
+.page-header {
+    margin-bottom: var(--space-xl);
+    text-align: center;
+}
+
+.page-header p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: white;
+    padding: var(--space-xl);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--space-xl);
+}
+
+.hero-section h1,
+.hero-section h2,
+.hero-section p {
+    color: white;
+}
+
+.hero-section .btn-appointment {
+    background-color: white;
+    color: var(--color-primary);
+    margin-top: var(--space-sm);
+    display: inline-block;
+}
+
+.hero-section .btn-appointment:hover {
+    background-color: var(--color-background);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin: var(--space-lg) 0;
+}
+
+.card {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(11, 59, 92, 0.12);
+}
+
+.card i {
+    font-size: 2rem;
+    color: var(--color-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+.card h3 {
+    margin-bottom: var(--space-xs);
+}
+
+.card p {
+    margin-bottom: 0;
+}
+
+.btn-outline {
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    background: transparent;
+    padding: 0.4rem var(--space-sm);
+    border-radius: 40px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.6rem var(--space-md);
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-secondary);
+}
+
+section {
+    margin-bottom: var(--space-xl);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--space-xl) 0;
+}
+
+/* === АДАПТИВНОСТЬ === */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul {
+        gap: var(--space-sm);
+        justify-content: center;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-section {
+        padding: var(--space-lg);
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* Добавьте в конец вашего style.css */
+
+/* Стили для приложения */
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.form-card, .controls-card, .appointments-list {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--color-border);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+}
+
+.btn-submit {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-submit:hover {
+    background-color: var(--color-secondary);
+}
+
+.btn-cancel {
+    background-color: #e0e7ed;
+    color: var(--color-text-primary);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-cancel:hover {
+    background-color: #cbd5e1;
+}
+
+.controls-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: flex-end;
+}
+
+.search-box {
+    flex: 2;
+    min-width: 200px;
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 40px;
+    font-size: 1rem;
+}
+
+.filter-box, .sort-box {
+    flex: 1;
+    min-width: 180px;
+}
+
+.filter-box label, .sort-box label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.filter-box select, .sort-box select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: white;
+}
+
+.appointments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.appointment-card {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.appointment-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-sm);
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.card-header h4 {
+    margin-bottom: 0;
+    color: var(--color-primary);
+}
+
+.card-badge {
+    background-color: var(--color-accent);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.card-body p {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-body i {
+    width: 20px;
+    color: var(--color-secondary);
+}
+
+.card-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+}
+
+.btn-edit, .btn-delete {
+    flex: 1;
+    padding: 0.4rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.btn-edit {
+    background-color: #e8f0fe;
+    color: var(--color-primary);
+}
+
+.btn-edit:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-delete {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.btn-delete:hover {
+    background-color: #dc2626;
+    color: white;
+}
+
+.placeholder-message {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--color-text-secondary);
+    grid-column: 1 / -1;
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+
+@media (max-width: 768px) {
+    .controls-row {
+        flex-direction: column;
+    }
+
+    .filter-box, .sort-box {
+        width: 100%;
+    }
+
+    .appointments-grid {
+        grid-template-columns: 1fr;
+    }
+}

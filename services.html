@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ГКБ им. Пирогова - Медицинские услуги</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Общие стили -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Дополнительные стили для страницы услуг */
+        .services-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .services-section h3 {
+            color: var(--color-primary);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-xs);
+            border-bottom: 2px solid var(--color-accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .services-section h3 i {
+            color: var(--color-secondary);
+        }
+
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .service-item {
+            background-color: var(--color-surface);
+            border-radius: var(--border-radius);
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            transition: all 0.2s;
+        }
+
+        .service-item:hover {
+            box-shadow: var(--box-shadow);
+            border-color: var(--color-secondary);
+            transform: translateX(5px);
+        }
+
+        .service-info {
+            flex: 2;
+            min-width: 250px;
+        }
+
+        .service-info h4 {
+            margin-bottom: 4px;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .service-info p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        .service-price {
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: 1.2rem;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .service-price small {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: var(--color-text-secondary);
+            display: block;
+        }
+
+        .service-badge {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-left: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .service-badge.popular {
+            background-color: #e67e22;
+        }
+
+        .service-badge.new {
+            background-color: #27ae60;
+        }
+
+        .btn-outline {
+            white-space: nowrap;
+        }
+
+        /* Стили для модального окна (добавляем сюда же) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--color-surface);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .modal-header h3 {
+            color: white;
+            margin-bottom: 0;
+            font-size: 1.5rem;
+        }
+
+        .modal-header h3 i {
+            margin-right: 10px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-body {
+            padding: var(--space-lg);
+        }
+
+        .appointment-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            font-size: 0.95rem;
+        }
+
+        .form-group label i {
+            color: var(--color-secondary);
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 3px rgba(44, 125, 160, 0.1);
+        }
+
+        .form-group input.error,
+        .form-group select.error {
+            border-color: #dc3545;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: var(--space-xs) 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .btn-submit {
+            flex: 2;
+            background-color: var(--color-primary);
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--color-secondary);
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background-color: transparent;
+            color: var(--color-text-secondary);
+            padding: 0.8rem;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background-color: var(--color-border);
+        }
+
+        .service-info {
+            background-color: var(--color-background);
+            padding: var(--space-sm);
+            border-radius: 8px;
+            margin-bottom: var(--space-sm);
+            font-size: 0.95rem;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .service-info i {
+            color: var(--color-secondary);
+            margin-right: 8px;
+        }
+
+        .success-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #2ecc71;
+            color: white;
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-notification.show {
+            transform: translateX(0);
+        }
+
+        .success-notification i {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .service-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .service-info h4 {
+                justify-content: center;
+            }
+
+            .service-price {
+                text-align: center;
+            }
+
+            .btn-outline {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Модальное окно записи -->
+    <div class="modal" id="appointmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    <i class="fas fa-calendar-plus"></i>
+                    Запись на прием
+                </h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="service-info" id="selectedServiceInfo" style="display: none;">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="selectedServiceText"></span>
+                </div>
+
+                <form class="appointment-form" id="appointmentForm" onsubmit="submitAppointment(event)">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> ФИО *</label>
+                        <input type="text" id="name" placeholder="Иванов Иван Иванович" required>
+                        <div class="error-message" id="nameError">Пожалуйста, введите ФИО</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Телефон *</label>
+                            <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+                            <div class="error-message" id="phoneError">Введите корректный телефон</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Дата *</label>
+                            <input type="date" id="date" required>
+                            <div class="error-message" id="dateError">Выберите дату</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Время</label>
+                            <select id="time">
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-user-md"></i> Специалист</label>
+                            <select id="doctor">
+                                <option value="">Выберите врача</option>
+                                <option value="Петрова А.И. (кардиолог)">Петрова А.И. (кардиолог)</option>
+                                <option value="Соколов Д.П. (невролог)">Соколов Д.П. (невролог)</option>
+                                <option value="Иванова Е.С. (УЗИ)">Иванова Е.С. (УЗИ)</option>
+                                <option value="Козлов А.В. (хирург)">Козлов А.В. (хирург)</option>
+                                <option value="Михайлова Т.В. (терапевт)">Михайлова Т.В. (терапевт)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-comment"></i> Комментарий</label>
+                        <textarea id="comment" rows="3" placeholder="Укажите жалобы или дополнительные пожелания..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-phone-alt"></i> Заказать звонок</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="callRequest">
+                            <label for="callRequest">Перезвоните мне для подтверждения записи</label>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="consent" required>
+                        <label for="consent">Я согласен на обработку персональных данных *</label>
+                    </div>
+                    <div class="error-message" id="consentError">Необходимо дать согласие</div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeModal()">Отмена</button>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane"></i>
+                            Отправить заявку
+                        </button>
+                    </div>
+                </form>
+
+                <p style="font-size: 0.8rem; color: var(--color-text-secondary); margin-top: var(--space-sm); text-align: center;">
+                    * - обязательные поля
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <h2>ГКБ им. Пирогова</h2>
+                <p>Городская клиническая больница №1</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="doctors.html">Врачи</a></li>
+                    <li><a href="services.html" class="active">Услуги</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+            <button class="btn-appointment" onclick="openModal()">
+                <i class="fas fa-calendar-check"></i>
+                Записаться
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>Медицинские услуги</h1>
+                <p>Полный спектр диагностики и лечения по доступным ценам</p>
+            </div>
+
+
+            <section class="services-section">
+                <h3><i class="fas fa-flask"></i> Лабораторная диагностика</h3>
+                <div class="services-list">
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>Общий анализ крови</h4>
+                            <p>Клинический анализ крови с лейкоцитарной формулой</p>
+                        </div>
+                        <div class="service-price">650 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'Общий анализ крови')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>Биохимический анализ крови</h4>
+                            <p>Глюкоза, холестерин, билирубин, АЛТ, АСТ, креатинин, мочевина</p>
+                        </div>
+                        <div class="service-price">1 800 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'Биохимический анализ крови')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>Анализ мочи общий</h4>
+                            <p>Физико-химическое исследование, микроскопия осадка</p>
+                        </div>
+                        <div class="service-price">450 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'Анализ мочи общий')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>Гормональный профиль <span class="service-badge new">Новое</span></h4>
+                            <p>ТТГ, Т3, Т4 свободные, пролактин, кортизол</p>
+                        </div>
+                        <div class="service-price">2 500 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'Гормональный профиль')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>Коагулограмма</h4>
+                            <p>ПТИ, МНО, АЧТВ, фибриноген</p>
+                        </div>
+                        <div class="service-price">1 200 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'Коагулограмма')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="services-section">
+                <h3><i class="fas fa-x-ray"></i> Инструментальная диагностика</h3>
+                <div class="services-list">
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>УЗИ брюшной полости</h4>
+                            <p>Печень, желчный пузырь, поджелудочная железа, селезенка</p>
+                        </div>
+                        <div class="service-price">2 800 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'УЗИ брюшной полости')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>УЗИ щитовидной железы</h4>
+                            <p>С допплерографией</p>
+                        </div>
+                        <div class="service-price">1 900 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'УЗИ щитовидной железы')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>ЭКГ (электрокардиограмма)</h4>
+                            <p>С расшифровкой</p>
+                        </div>
+                        <div class="service-price">1 100 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'ЭКГ')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>ЭхоКГ (УЗИ сердца)</h4>
+                            <p>Эхокардиография с допплер-анализом</p>
+                        </div>
+                        <div class="service-price">3 200 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'ЭхоКГ')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>МРТ головного мозга <span class="service-badge popular">Хиты</span></h4>
+                            <p>С контрастом или без</p>
+                        </div>
+                        <div class="service-price">5 500 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'МРТ головного мозга')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>КТ грудной клетки</h4>
+                            <p>Компьютерная томография легких</p>
+                        </div>
+                        <div class="service-price">4 200 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'КТ грудной клетки')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>ФГДС (гастроскопия)</h4>
+                            <p>Эндоскопическое исследование желудка</p>
+                        </div>
+                        <div class="service-price">3 500 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'ФГДС')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="services-section">
+                <h3><i class="fas fa-syringe"></i> Лечебные процедуры</h3>
+                <div class="services-list">
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>Инъекция</h4>
+                            <p>Стоимость без учета стоимости препарата</p>
+                        </div>
+                        <div class="service-price">350 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'Внутримышечная инъекция')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>Физиотерапия (1 сеанс)</h4>
+                            <p>Магнитотерапия, лазер, УВЧ, электрофорез</p>
+                        </div>
+                        <div class="service-price">800 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'Физиотерапия')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>Массаж </h4>
+                            <p>Лечебный массаж, 1 сеанс (40 минут)</p>
+                        </div>
+                        <div class="service-price">1 500 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'Массаж спины')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-info">
+                            <h4>ЛФК (индивидуальное занятие)</h4>
+                            <p>С инструктором</p>
+                        </div>
+                        <div class="service-price">1 300 ₽</div>
+                        <button class="btn-outline" onclick="openModal('', 'ЛФК')">
+                            <i class="fas fa-calendar-check"></i>
+                            Записаться
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Информационный блок -->
+            <div style="background: linear-gradient(135deg, #e8f1f8 0%, #d9e9f2 100%); border-radius: var(--border-radius); padding: var(--space-xl); margin-top: var(--space-xl); border: 1px solid var(--color-border);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
+                    <div style="text-align: center;">
+                        <i class="fas fa-file-invoice" style="font-size: 3rem; color: var(--color-primary); margin-bottom: var(--space-sm);"></i>
+                        <h4>Оплата услуг</h4>
+                        <p style="font-size: 0.9rem;">Наличный и безналичный расчет. Принимаем банковские карты и медицинские страховки</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-clock" style="font-size: 3rem; color: var(--color-primary); margin-bottom: var(--space-sm);"></i>
+                        <h4>График работы</h4>
+                        <p style="font-size: 0.9rem;">Пн-Пт: 8:00 - 20:00<br>Сб: 9:00 - 15:00</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-percent" style="font-size: 3rem; color: var(--color-primary); margin-bottom: var(--space-sm);"></i>
+                        <h4>Скидки и льготы</h4>
+                        <p style="font-size: 0.9rem;">Пенсионерам, инвалидам, ветеранам - скидка 10%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Призыв к действию -->
+            <div style="text-align: center; margin: var(--space-xl) 0;">
+                <h3>Не нашли нужную услугу?</h3>
+                <p style="margin-bottom: var(--space-md);">Позвоните нам, и мы подберем оптимальный вариант</p>
+                <button class="btn-appointment" style="background-color: var(--color-primary); font-size: 1.1rem; padding: 0.8rem 2rem;" onclick="window.location.href='tel:+74951234567'">
+                    <i class="fas fa-phone-alt"></i>
+                    +7 (495) 123-45-67
+                </button>
+            </div>
+        </div>
+    </main>
+<div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/213/moscow/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:center;top:0px;">Москва</a><a href="https://yandex.ru/maps/213/moscow/house/bolshaya_pirogovskaya_ulitsa_6s1/Z04YcwFiSUABQFtvfXtzeXVjZA==/?ll=37.562056%2C55.728900&utm_medium=mapframe&utm_source=maps&z=14" style="color:#eee;font-size:12px;position:absolute;top:14px;">Большая Пироговская улица, 6с1 — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll=37.562056%2C55.728900&mode=whatshere&whatshere%5Bpoint%5D=37.562056%2C55.728900&whatshere%5Bzoom%5D=17&z=14" width="1060" height="600" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>О больнице</h4>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="doctors.html">Врачи</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Отделения</h4>
+                    <ul>
+                        <li><a href="#">Терапевтическое</a></li>
+                        <li><a href="#">Хирургическое</a></li>
+                        <li><a href="#">Кардиологическое</a></li>
+                        <li><a href="#">Неврологическое</a></li>
+                        <li><a href="#">Реанимация</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-68 (приемный покой)</li>
+                        <li><i class="fas fa-envelope"></i> info@hospital.ru</li>
+                        <li><i class="fas fa-map-pin"></i> Москва, ул. Пирогова, 15</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Функции для работы с модальным окном
+        function openModal(doctorName = '', serviceName = '') {
+            const modal = document.getElementById('appointmentModal');
+            const serviceInfo = document.getElementById('selectedServiceInfo');
+            const serviceText = document.getElementById('selectedServiceText');
+
+            if (serviceName) {
+                serviceInfo.style.display = 'block';
+                serviceText.textContent = `Запись на услугу: ${serviceName}`;
+            } else if (doctorName) {
+                serviceInfo.style.display = 'block';
+                serviceText.textContent = `Запись к врачу: ${doctorName}`;
+            } else {
+                serviceInfo.style.display = 'none';
+            }
+
+            // Устанавливаем минимальную дату (сегодня)
+            const dateInput = document.getElementById('date');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('appointmentModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Сбрасываем форму
+            const form = document.getElementById('appointmentForm');
+            if (form) form.reset();
+
+            // Скрываем ошибки
+            document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+        }
+
+        // Валидация телефона
+        function validatePhone(phone) {
+            const phoneRegex = /^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/;
+            return phoneRegex.test(phone.replace(/\s+/g, ''));
+        }
+
+        // Отправка формы
+        function submitAppointment(event) {
+            event.preventDefault();
+
+            // Сброс ошибок
+            document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+
+            // Получаем значения
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const date = document.getElementById('date').value;
+            const doctor = document.getElementById('doctor').value;
+            const comment = document.getElementById('comment').value;
+            const callRequest = document.getElementById('callRequest').checked;
+            const consent = document.getElementById('consent').checked;
+
+            let isValid = true;
+
+            if (!name) {
+                document.getElementById('nameError').classList.add('show');
+                isValid = false;
+            }
+
+            if (!phone || !validatePhone(phone)) {
+                document.getElementById('phoneError').classList.add('show');
+                isValid = false;
+            }
+
+            if (!date) {
+                document.getElementById('dateError').classList.add('show');
+                isValid = false;
+            }
+
+            if (!consent) {
+                document.getElementById('consentError').classList.add('show');
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // Показываем уведомление об успехе
+            const notification = document.getElementById('successNotification');
+            const messageSpan = document.getElementById('successMessage');
+
+            if (callRequest) {
+                messageSpan.textContent = `Заказан звонок на номер ${phone}. Ожидайте звонка в ближайшее время.`;
+            } else {
+                messageSpan.textContent = `Спасибо, ${name}! Мы отправили подтверждение на ваш номер.`;
+            }
+
+            notification.classList.add('show');
+
+            // Скрываем через 5 секунд
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+
+            // Закрываем модальное окно
+            closeModal();
+        }
+
+        // Закрытие модального окна по клику на фон
+        window.onclick = function(event) {
+            const modal = document.getElementById('appointmentModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Маска для телефона
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        if (value.startsWith('7')) {
+                            value = '+7' + value.slice(1);
+                        } else if (value.startsWith('8')) {
+                            value = '+7' + value.slice(1);
+                        } else {
+                            value = '+7' + value;
+                        }
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            // Устанавливаем активный пункт меню
+            const currentPage = 'services.html';
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+<div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/213/moscow/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:center;top:0px;">Москва</a><a href="https://yandex.ru/maps/213/moscow/house/bolshaya_pirogovskaya_ulitsa_6s1/Z04YcwFiSUABQFtvfXtzeXVjZA==/?ll=37.562056%2C55.728900&utm_medium=mapframe&utm_source=maps&z=14" style="color:#eee;font-size:12px;position:absolute;top:14px;">Большая Пироговская улица, 6с1 — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll=37.562056%2C55.728900&mode=whatshere&whatshere%5Bpoint%5D=37.562056%2C55.728900&whatshere%5Bzoom%5D=17&z=14" width="1060" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+</body>
+</html>
