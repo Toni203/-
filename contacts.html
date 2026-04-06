@@ -1,609 +1,186 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ГКБ им. Пирогова - Контакты и режим работы</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <meta charset="UTF-8"> <!-- Чтобы русские буквы не превращались в кракозябры -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Чтобы сайт нормально выглядел на телефонах -->
+    <title>ГКБ им. Пирогова - Контакты и режим работы</title> <!-- Название вкладки в браузере -->
+
+    <!-- Подключаем красивые шрифты от Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter...">
+
+    <!-- Подключаем иконки (телефон, конверт, часы и т.д.) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Общие стили -->
+
+    <!-- Основные стили (цвета, кнопки, шапка, подвал) из файла style.css -->
     <link rel="stylesheet" href="style.css">
+
     <style>
-        /* Специфические стили для страницы контактов */
+        /* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ТОЛЬКО ДЛЯ ЭТОЙ СТРАНИЦЫ ===== */
+
+        /* Красивая шапка раздела "Контакты" с градиентным фоном */
         .contacts-header {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            background: linear-gradient(135deg, #0B3B5C 0%, #2C7DA0 100%);
             color: white;
-            padding: var(--space-xl) 0;
-            margin-bottom: var(--space-xl);
-            border-radius: var(--border-radius);
+            padding: 3rem 0;
+            border-radius: 12px;
             text-align: center;
         }
 
-        .contacts-header h1 {
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: var(--space-sm);
-        }
-
-        .contacts-header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
+        /* Сетка контактов: две колонки на компьютере, одна на телефоне */
         .contacts-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-lg);
-            margin-bottom: var(--space-xl);
+            grid-template-columns: repeat(2, 1fr); /* Две колонки одинаковой ширины */
+            gap: 2rem;
         }
 
+        /* Карточка с контактной информацией (белый прямоугольник с тенью) */
         .contact-card {
-            background-color: var(--color-surface);
-            border-radius: var(--border-radius);
-            padding: var(--space-xl);
-            border: 1px solid var(--color-border);
-            box-shadow: var(--box-shadow);
-            height: 100%;
-            transition: transform 0.3s;
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #D9E4EC;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s; /* Плавный эффект при наведении */
         }
 
         .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(11, 59, 92, 0.15);
+            transform: translateY(-5px); /* Карточка приподнимается при наведении */
         }
 
+        /* Заголовок внутри карточки с иконкой и подчёркиванием */
         .contact-card h2 {
-            color: var(--color-primary);
-            margin-bottom: var(--space-lg);
-            padding-bottom: var(--space-sm);
-            border-bottom: 2px solid var(--color-accent);
+            border-bottom: 2px solid #4CB5AB;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .contact-card h2 i {
-            color: var(--color-secondary);
-            font-size: 1.8rem;
-        }
-
+        /* Один пункт контакта (например, телефон) */
         .contact-info-item {
             display: flex;
-            align-items: flex-start;
-            gap: var(--space-md);
-            margin-bottom: var(--space-md);
-            padding: var(--space-sm);
+            gap: 1rem;
+            padding: 0.5rem;
             border-radius: 8px;
-            transition: background-color 0.2s;
         }
 
-        .contact-info-item:hover {
-            background-color: var(--color-background);
-        }
-
+        /* Круглая иконка слева от контакта */
         .contact-icon {
             width: 40px;
             height: 40px;
-            background-color: var(--color-accent);
+            background-color: #4CB5AB;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.2rem;
-            flex-shrink: 0;
         }
 
-        .contact-text {
-            flex: 1;
-        }
-
-        .contact-text h3 {
-            font-size: 1.1rem;
-            margin-bottom: 4px;
-            color: var(--color-primary);
-        }
-
-        .contact-text p {
-            margin-bottom: 0;
-            color: var(--color-text-secondary);
-            line-height: 1.4;
-        }
-
-        .contact-text a {
-            color: var(--color-secondary);
-            font-weight: 500;
-        }
-
-        .contact-text a:hover {
-            text-decoration: underline;
-        }
-
-        .schedule-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .schedule-table tr {
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .schedule-table tr:last-child {
-            border-bottom: none;
-        }
-
-        .schedule-table td {
-            padding: var(--space-sm) 0;
-        }
-
-        .schedule-table td:first-child {
-            font-weight: 600;
-            color: var(--color-primary);
-        }
-
-        .schedule-table td:last-child {
-            text-align: right;
-            color: var(--color-text-secondary);
-        }
-
+        /* Красный бейджик "круглосуточно" */
         .emergency-badge {
             background-color: #ff6b6b;
             color: white;
-            padding: 0.2rem 0.8rem;
             border-radius: 20px;
+            padding: 0.2rem 0.8rem;
             font-size: 0.75rem;
-            font-weight: 600;
             margin-left: 10px;
-            display: inline-block;
         }
 
-        .map-container {
-            background-color: var(--color-surface);
-            border-radius: var(--border-radius);
-            padding: var(--space-lg);
-            border: 1px solid var(--color-border);
-            margin-bottom: var(--space-xl);
-        }
-
-        .map-placeholder {
-            background: linear-gradient(135deg, #e8f1f8 0%, #d9e9f2 100%);
-            border-radius: 8px;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .map-placeholder i {
-            font-size: 5rem;
-            color: var(--color-primary);
-            opacity: 0.3;
-            margin-bottom: var(--space-md);
-        }
-
-        .map-placeholder p {
-            color: var(--color-primary);
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: var(--space-xs);
-        }
-
-        .map-placeholder small {
-            color: var(--color-text-secondary);
-        }
-
-        .transport-info {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--space-md);
-            margin-top: var(--space-lg);
-        }
-
-        .transport-item {
-            text-align: center;
-            padding: var(--space-md);
-            background-color: var(--color-background);
-            border-radius: 8px;
-        }
-
-        .transport-item i {
-            font-size: 1.5rem;
-            color: var(--color-secondary);
-            margin-bottom: var(--space-xs);
-        }
-
-        .transport-item h4 {
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .transport-item p {
-            font-size: 0.9rem;
-            margin-bottom: 0;
-        }
-
-        .feedback-form {
-            background-color: var(--color-surface);
-            border-radius: var(--border-radius);
-            padding: var(--space-xl);
-            border: 1px solid var(--color-border);
-            margin-top: var(--space-xl);
-        }
-
-        .feedback-form h2 {
-            color: var(--color-primary);
-            margin-bottom: var(--space-md);
-            text-align: center;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-md);
-            margin-bottom: var(--space-md);
-        }
-
-        .form-group {
-            margin-bottom: var(--space-md);
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: var(--space-xs);
-            font-weight: 500;
-            color: var(--color-text-primary);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        /* Таблица с режимом работы отделений */
+        .schedule-table {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-size: 1rem;
-            transition: border-color 0.2s;
+        }
+        .schedule-table tr {
+            border-bottom: 1px solid #D9E4EC;
+        }
+        .schedule-table td:first-child {
+            font-weight: bold; /* Название отделения жирным */
+        }
+        .schedule-table td:last-child {
+            text-align: right; /* Время работы выравниваем вправо */
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--color-secondary);
-        }
-
-        .form-group textarea {
-            height: 120px;
-            resize: vertical;
-        }
-
-        .btn-submit {
-            background-color: var(--color-primary);
-            color: white;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1rem;
-        }
-
-        .btn-submit:hover {
-            background-color: var(--color-secondary);
-        }
-
+        /* Иконки соцсетей */
         .social-links {
             display: flex;
-            gap: var(--space-md);
-            margin-top: var(--space-md);
+            gap: 1rem;
+            margin-top: 1rem;
         }
-
         .social-link {
             width: 45px;
             height: 45px;
-            background-color: var(--color-background);
+            background-color: #F4F9FC;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--color-primary);
-            font-size: 1.3rem;
             transition: all 0.2s;
         }
-
         .social-link:hover {
-            background-color: var(--color-primary);
+            background-color: #0B3B5C;
             color: white;
-            transform: translateY(-3px);
+            transform: translateY(-3px); /* При наведении иконка подпрыгивает */
         }
 
-        /* Стили для модального окна записи */
+        /* ===== МОДАЛЬНОЕ ОКНО (ВСПЛЫВАЮЩАЯ ФОРМА ЗАПИСИ) ===== */
         .modal {
-            display: none;
+            display: none; /* Сначала скрыто */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный чёрный фон */
+            backdrop-filter: blur(5px); /* Размытие фона за окном */
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
+            z-index: 1000;
         }
-
         .modal.active {
-            display: flex;
+            display: flex; /* Показываем окно, когда есть класс .active */
         }
 
+        /* Белая карточка внутри модального окна */
         .modal-content {
-            background-color: var(--color-surface);
-            border-radius: var(--border-radius);
+            background-color: white;
+            border-radius: 12px;
             width: 90%;
             max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.3s ease;
         }
 
+        /* Анимация: окно выезжает сверху */
         @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
+        /* Голова модального окна (градиентный фон) */
         .modal-header {
-            padding: var(--space-lg);
-            border-bottom: 1px solid var(--color-border);
+            background: linear-gradient(135deg, #0B3B5C, #2C7DA0);
+            border-radius: 12px 12px 0 0;
+            padding: 1.5rem;
+            color: white;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-            color: white;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
         }
 
-        .modal-header h3 {
-            color: white;
-            margin-bottom: 0;
-            font-size: 1.5rem;
-        }
-
-        .modal-header h3 i {
-            margin-right: 10px;
-        }
-
+        /* Кнопка-крестик для закрытия */
         .modal-close {
             background: none;
             border: none;
             color: white;
             font-size: 2rem;
             cursor: pointer;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-            line-height: 1;
         }
 
-        .modal-close:hover {
-            opacity: 1;
-        }
-
-        .modal-body {
-            padding: var(--space-lg);
-        }
-
-        .appointment-form {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-md);
-        }
-
-        .appointment-form .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-xs);
-            margin-bottom: 0;
-        }
-
-        .appointment-form .form-group label {
-            font-weight: 600;
-            color: var(--color-text-primary);
-            font-size: 0.95rem;
-        }
-
-        .appointment-form .form-group label i {
-            color: var(--color-secondary);
-            width: 20px;
-            margin-right: 5px;
-        }
-
-        .appointment-form .form-group input,
-        .appointment-form .form-group select,
-        .appointment-form .form-group textarea {
-            padding: 0.8rem;
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-
-        .appointment-form .form-group input:focus,
-        .appointment-form .form-group select:focus,
-        .appointment-form .form-group textarea:focus {
-            outline: none;
-            border-color: var(--color-secondary);
-            box-shadow: 0 0 0 3px rgba(44, 125, 160, 0.1);
-        }
-
-        .appointment-form .form-group input.error,
-        .appointment-form .form-group select.error {
-            border-color: #dc3545;
-        }
-
-        .error-message {
-            color: #dc3545;
-            font-size: 0.85rem;
-            margin-top: 4px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .appointment-form .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-sm);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: var(--space-xs) 0;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            font-size: 0.9rem;
-            color: var(--color-text-secondary);
-            cursor: pointer;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: var(--space-sm);
-            margin-top: var(--space-md);
-        }
-
-        .btn-submit {
-            flex: 2;
-            background-color: var(--color-primary);
-            color: white;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-submit:hover {
-            background-color: var(--color-secondary);
-        }
-
-        .btn-cancel {
-            flex: 1;
-            background-color: transparent;
-            color: var(--color-text-secondary);
-            padding: 0.8rem;
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-cancel:hover {
-            background-color: var(--color-border);
-        }
-
-        .service-info {
-            background-color: var(--color-background);
-            padding: var(--space-sm);
-            border-radius: 8px;
-            margin-bottom: var(--space-sm);
-            font-size: 0.95rem;
-            border-left: 4px solid var(--color-accent);
-        }
-
-        .service-info i {
-            color: var(--color-secondary);
-            margin-right: 8px;
-        }
-
-        .success-notification {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #2ecc71;
-            color: white;
-            padding: var(--space-md) var(--space-lg);
-            border-radius: var(--border-radius);
-            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.3);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1001;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .success-notification.show {
-            transform: translateX(0);
-        }
-
-        .success-notification i {
-            font-size: 1.5rem;
-        }
-
+        /* Для телефонов: всё в одну колонку */
         @media (max-width: 768px) {
             .contacts-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Одна колонка вместо двух */
             }
-
-            .transport-info {
-                grid-template-columns: 1fr;
-            }
-
             .form-row {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Поля формы друг под другом */
             }
-
-            .contact-card {
-                padding: var(--space-lg);
-            }
-
-            .map-placeholder {
-                height: 300px;
-            }
-
-            .appointment-form .form-row {
-                grid-template-columns: 1fr;
-            }
-
             .modal-content {
                 width: 95%;
             }
@@ -611,314 +188,252 @@
     </style>
 </head>
 <body>
-    <!-- Модальное окно записи -->
-    <div class="modal" id="appointmentModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>
-                    <i class="fas fa-calendar-plus"></i>
-                    Запись на прием
-                </h3>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="service-info" id="selectedServiceInfo" style="display: none;">
-                    <i class="fas fa-info-circle"></i>
-                    <span id="selectedServiceText"></span>
+
+<!-- ===== МОДАЛЬНОЕ ОКНО (ФОРМА ЗАПИСИ) ===== -->
+<div class="modal" id="appointmentModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-calendar-plus"></i> Запись на прием</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button> <!-- Кнопка закрыть -->
+        </div>
+        <div class="modal-body">
+            <!-- Форма записи. При отправке вызывается функция submitAppointment -->
+            <form class="appointment-form" id="appointmentForm" onsubmit="submitAppointment(event)">
+                <!-- Поле ФИО -->
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> ФИО *</label>
+                    <input type="text" id="name" placeholder="Иванов Иван Иванович" required>
+                    <div class="error-message" id="nameError">Пожалуйста, введите ФИО</div>
                 </div>
 
-                <form class="appointment-form" id="appointmentForm" onsubmit="submitAppointment(event)">
+                <!-- Телефон и дата в одной строке (на компьютере) -->
+                <div class="form-row">
                     <div class="form-group">
-                        <label><i class="fas fa-user"></i> ФИО *</label>
-                        <input type="text" id="name" placeholder="Иванов Иван Иванович" required>
-                        <div class="error-message" id="nameError">Пожалуйста, введите ФИО</div>
+                        <label><i class="fas fa-phone"></i> Телефон *</label>
+                        <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+                        <div class="error-message" id="phoneError">Введите корректный телефон</div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-phone"></i> Телефон *</label>
-                            <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
-                            <div class="error-message" id="phoneError">Введите корректный телефон</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label><i class="fas fa-calendar"></i> Дата *</label>
-                            <input type="date" id="date" required>
-                            <div class="error-message" id="dateError">Выберите дату</div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-clock"></i> Время</label>
-                            <select id="time">
-                                <option value="09:00">09:00</option>
-                                <option value="10:00">10:00</option>
-                                <option value="11:00">11:00</option>
-                                <option value="12:00">12:00</option>
-                                <option value="13:00">13:00</option>
-                                <option value="14:00">14:00</option>
-                                <option value="15:00">15:00</option>
-                                <option value="16:00">16:00</option>
-                                <option value="17:00">17:00</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label><i class="fas fa-user-md"></i> Специалист</label>
-                            <select id="doctor">
-                                <option value="">Выберите врача</option>
-                                <option value="Петрова А.И. (кардиолог)">Петрова А.И. (кардиолог)</option>
-                                <option value="Соколов Д.П. (невролог)">Соколов Д.П. (невролог)</option>
-                                <option value="Иванова Е.С. (УЗИ)">Иванова Е.С. (УЗИ)</option>
-                                <option value="Козлов А.В. (хирург)">Козлов А.В. (хирург)</option>
-                                <option value="Михайлова Т.В. (терапевт)">Михайлова Т.В. (терапевт)</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="form-group">
-                        <label><i class="fas fa-comment"></i> Комментарий</label>
-                        <textarea id="comment" rows="3" placeholder="Укажите жалобы или дополнительные пожелания..."></textarea>
+                        <label><i class="fas fa-calendar"></i> Дата *</label>
+                        <input type="date" id="date" required>
+                        <div class="error-message" id="dateError">Выберите дату</div>
                     </div>
+                </div>
 
+                <!-- Время и врач в одной строке -->
+                <div class="form-row">
                     <div class="form-group">
-                        <label><i class="fas fa-phone-alt"></i> Заказать звонок</label>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="callRequest">
-                            <label for="callRequest">Перезвоните мне для подтверждения записи</label>
-                        </div>
+                        <label><i class="fas fa-clock"></i> Время</label>
+                        <select id="time">
+                            <option value="09:00">09:00</option>
+                            <!-- ... остальные часы ... -->
+                        </select>
                     </div>
-
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="consent" required>
-                        <label for="consent">Я согласен на обработку персональных данных *</label>
+                    <div class="form-group">
+                        <label><i class="fas fa-user-md"></i> Специалист</label>
+                        <select id="doctor">
+                            <option value="">Выберите врача</option>
+                            <option value="Петрова А.И. (кардиолог)">Петрова А.И. (кардиолог)</option>
+                            <!-- ... остальные врачи ... -->
+                        </select>
                     </div>
-                    <div class="error-message" id="consentError">Необходимо дать согласие</div>
+                </div>
 
-                    <div class="form-actions">
-                        <button type="button" class="btn-cancel" onclick="closeModal()">Отмена</button>
-                        <button type="submit" class="btn-submit">
-                            <i class="fas fa-paper-plane"></i>
-                            Отправить заявку
-                        </button>
-                    </div>
-                </form>
+                <!-- Комментарий -->
+                <div class="form-group">
+                    <label><i class="fas fa-comment"></i> Комментарий</label>
+                    <textarea id="comment" rows="3" placeholder="Укажите жалобы..."></textarea>
+                </div>
 
-                <p style="font-size: 0.8rem; color: var(--color-text-secondary); margin-top: var(--space-sm); text-align: center;">
-                    * - обязательные поля
-                </p>
-            </div>
+                <!-- Чекбокс: заказать звонок -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="callRequest">
+                    <label for="callRequest">Перезвоните мне для подтверждения записи</label>
+                </div>
+
+                <!-- Чекбокс: согласие на обработку данных (обязательный) -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent" required>
+                    <label for="consent">Я согласен на обработку персональных данных *</label>
+                </div>
+                <div class="error-message" id="consentError">Необходимо дать согласие</div>
+
+                <!-- Кнопки: Отмена и Отправить -->
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Отмена</button>
+                    <button type="submit" class="btn-submit">Отправить заявку</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
+<!-- ===== ШАПКА САЙТА (ХЕДЕР) ===== -->
+<header>
+    <div class="container header-content">
+        <div class="logo">
+            <h2>ГКБ им. Пирогова</h2>
+            <p>Городская клиническая больница №1</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="doctors.html">Врачи</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="contacts.html" class="active">Контакты</a></li> <!-- .active = подсветка текущей страницы -->
+            </ul>
+        </nav>
+        <button class="btn-appointment" onclick="openModal()">
+            <i class="fas fa-calendar-check"></i> Записаться <!-- Кнопка открывает модальное окно -->
+        </button>
+    </div>
+</header>
 
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <h2>ГКБ им. Пирогова</h2>
-                <p>Городская клиническая больница №1</p>
+<!-- ===== ОСНОВНОЕ СОДЕРЖИМОЕ ===== -->
+<main>
+    <div class="container">
+
+        <!-- Красивый заголовок раздела -->
+        <div class="contacts-header">
+            <h1>Контакты и режим работы</h1>
+            <p>Мы всегда готовы прийти на помощь...</p>
+        </div>
+
+        <!-- Сетка с двумя карточками: Контакты и Режим работы -->
+        <div class="contacts-grid">
+
+            <!-- КАРТОЧКА 1: Свяжитесь с нами -->
+            <div class="contact-card">
+                <h2><i class="fas fa-phone-alt"></i> Свяжитесь с нами</h2>
+
+                <!-- Пункт: Справочная служба -->
+                <div class="contact-info-item">
+                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                    <div class="contact-text">
+                        <h3>Справочная служба</h3>
+                        <p><a href="tel:+74951234567">+7 (495) 123-45-67</a></p>
+                        <p>Ежедневно с 8:00 до 20:00</p>
+                    </div>
+                </div>
+
+                <!-- Пункт: Приемный покой (с красным бейджиком) -->
+                <div class="contact-info-item">
+                    <div class="contact-icon"><i class="fas fa-ambulance"></i></div>
+                    <div class="contact-text">
+                        <h3>Приемный покой <span class="emergency-badge">круглосуточно</span></h3>
+                        <p><a href="tel:+74951234568">+7 (495) 123-45-68</a></p>
+                    </div>
+                </div>
+
+                <!-- Пункт: Email -->
+                <div class="contact-info-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-text">
+                        <h3>Электронная почта</h3>
+                        <p><a href="mailto:info@hospital.ru">info@hospital.ru</a></p>
+                    </div>
+                </div>
+
+                <!-- Пункт: Отдел платных услуг -->
+                <div class="contact-info-item">...</div>
+
+                <!-- Пункт: Неотложная помощь (103 или 112) -->
+                <div class="contact-info-item">...</div>
+
+                <!-- Иконки соцсетей (ВК, Telegram, WhatsApp, YouTube) -->
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
             </div>
-            <nav>
+
+            <!-- КАРТОЧКА 2: Режим работы (таблица) -->
+            <div class="contact-card">
+                <h2><i class="fas fa-clock"></i> Режим работы</h2>
+                <table class="schedule-table">
+                    <tr><td>Поликлиника</td><td>Пн-Пт: 8:00 - 20:00</td></tr>
+                    <tr><td></td><td>Сб: 9:00 - 15:00</td></tr>
+                    <tr><td></td><td>Вс: выходной</td></tr>
+                    <tr><td>Стационар</td><td>Круглосуточно</td></tr>
+                    <tr><td>Приемный покой</td><td>24/7</td></tr>
+                    <!-- ... остальные отделения ... -->
+                </table>
+            </div>
+        </div>
+
+        <!-- ТРИ ДОПОЛНИТЕЛЬНЫЕ КАРТОЧКИ: Администрация, Отдел кадров, Бухгалтерия -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div>Администрация (Главный врач, приём по вторникам и четвергам)</div>
+            <div>Отдел кадров (вопросы трудоустройства)</div>
+            <div>Бухгалтерия (оплата услуг, договоры)</div>
+        </div>
+
+    </div>
+</main>
+
+<!-- ===== ПОДВАЛ (ФУТЕР) ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>О больнице</h4>
                 <ul>
                     <li><a href="index.html">Главная</a></li>
                     <li><a href="doctors.html">Врачи</a></li>
                     <li><a href="services.html">Услуги</a></li>
-                    <li><a href="contacts.html" class="active">Контакты</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
                 </ul>
-            </nav>
-            <button class="btn-appointment" onclick="openModal()">
-                <i class="fas fa-calendar-check"></i>
-                Записаться
-            </button>
-        </div>
-    </header>
-
-    <main>
-        <div class="container">
-            <div class="contacts-header">
-                <h1>Контакты и режим работы</h1>
-                <p>Мы всегда готовы прийти на помощь. Свяжитесь с нами удобным для вас способом</p>
             </div>
-
-            <!-- Основная контактная информация -->
-            <div class="contacts-grid">
-                <!-- Карточка с контактами -->
-                <div class="contact-card">
-                    <h2>
-                        <i class="fas fa-phone-alt"></i>
-                        Свяжитесь с нами
-                    </h2>
-
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Справочная служба</h3>
-                            <p><a href="tel:+74951234567">+7 (495) 123-45-67</a></p>
-                            <p style="font-size: 0.9rem;">Ежедневно с 8:00 до 20:00</p>
-                        </div>
-                    </div>
-
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-ambulance"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Приемный покой <span class="emergency-badge">круглосуточно</span></h3>
-                            <p><a href="tel:+74951234568">+7 (495) 123-45-68</a></p>
-                            <p style="font-size: 0.9rem;">Экстренная госпитализация 24/7</p>
-                        </div>
-                    </div>
-
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Электронная почта</h3>
-                            <p><a href="mailto:info@hospital.ru">info@hospital.ru</a></p>
-                            <p style="font-size: 0.9rem;">Для общих вопросов</p>
-                        </div>
-                    </div>
-
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-file-medical"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Отдел платных услуг</h3>
-                            <p><a href="tel:+74951234569">+7 (495) 123-45-69</a></p>
-                            <p style="font-size: 0.9rem;">Пн-Пт с 9:00 до 18:00</p>
-                        </div>
-                    </div>
-
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-truck-medical"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Неотложная помощь</h3>
-                            <p><strong>103</strong> или <strong>112</strong></p>
-                            <p style="font-size: 0.9rem;">С мобильного и городского</p>
-                        </div>
-                    </div>
-
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-
-                <!-- Карточка с режимом работы -->
-                <div class="contact-card">
-                    <h2>
-                        <i class="fas fa-clock"></i>
-                        Режим работы
-                    </h2>
-
-                    <table class="schedule-table">
-                        <tr>
-                            <td>Поликлиника</td>
-                            <td>Пн-Пт: 8:00 - 20:00</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Сб: 9:00 - 15:00</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Вс: выходной</td>
-                        </tr>
-                        <tr>
-                            <td>Стационар</td>
-                            <td>Круглосуточно</td>
-                        </tr>
-                        <tr>
-                            <td>Приемный покой</td>
-                            <td>24/7</td>
-                        </tr>
-                        <tr>
-                            <td>Травмпункт</td>
-                            <td>Круглосуточно</td>
-                        </tr>
-                        <tr>
-                            <td>Лаборатория</td>
-                            <td>Пн-Пт: 7:30 - 18:00</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Сб: 8:00 - 14:00</td>
-                        </tr>
-                        <tr>
-                            <td>Рентген-кабинет</td>
-                            <td>Пн-Пт: 8:00 - 19:00</td>
-                        </tr>
-                    </table>
-                </div>
+            <div class="footer-col">
+                <h4>Отделения</h4>
+                <ul>...</ul>
             </div>
-
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-bottom: var(--space-xl);">
-                <div style="background-color: var(--color-surface); border-radius: var(--border-radius); padding: var(--space-lg); text-align: center; border: 1px solid var(--color-border);">
-                    <i class="fas fa-building" style="font-size: 2.5rem; color: var(--color-secondary); margin-bottom: var(--space-sm);"></i>
-                    <h3>Администрация</h3>
-                    <p style="margin-bottom: 4px;">Главный врач: Петров В.И.</p>
-                    <p style="margin-bottom: 4px;">Прием: вт, чт 14:00-16:00</p>
-                    <p><a href="tel:+74951234570">+7 (495) 123-45-70</a></p>
-                </div>
-
-                <div style="background-color: var(--color-surface); border-radius: var(--border-radius); padding: var(--space-lg); text-align: center; border: 1px solid var(--color-border);">
-                    <i class="fas fa-file-contract" style="font-size: 2.5rem; color: var(--color-secondary); margin-bottom: var(--space-sm);"></i>
-                    <h3>Отдел кадров</h3>
-                    <p style="margin-bottom: 4px;">По вопросам трудоустройства</p>
-                    <p style="margin-bottom: 4px;">Пн-Пт 10:00-17:00</p>
-                    <p><a href="mailto:hr@hospital.ru">hr@hospital.ru</a></p>
-                </div>
-
-                <div style="background-color: var(--color-surface); border-radius: var(--border-radius); padding: var(--space-lg); text-align: center; border: 1px solid var(--color-border);">
-                    <i class="fas fa-file-invoice" style="font-size: 2.5rem; color: var(--color-secondary); margin-bottom: var(--space-sm);"></i>
-                    <h3>Бухгалтерия</h3>
-                    <p style="margin-bottom: 4px;">Оплата услуг, договоры</p>
-                    <p style="margin-bottom: 4px;">Пн-Пт 9:00-18:00</p>
-                    <p><a href="tel:+74951234571">+7 (495) 123-45-71</a></p>
-                </div>
-            </div>
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>О больнице</h4>
-                    <ul>
-                        <li><a href="index.html">Главная</a></li>
-                        <li><a href="doctors.html">Врачи</a></li>
-                        <li><a href="services.html">Услуги</a></li>
-                        <li><a href="contacts.html">Контакты</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Отделения</h4>
-                    <ul>
-                        <li><a href="#">Терапевтическое</a></li>
-                        <li><a href="#">Хирургическое</a></li>
-                        <li><a href="#">Кардиологическое</a></li>
-                        <li><a href="#">Неврологическое</a></li>
-                        <li><a href="#">Реанимация</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Контакты</h4>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
-                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-68 (приемный покой)</li>
-                        <li><i class="fas fa-envelope"></i> info@hospital.ru</li>
-                        <li><i class="fas fa-map-pin"></i> Москва, ул. Пирогова, 15</li>
-                    </ul>
-                </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
+                    <li><i class="fas fa-envelope"></i> info@hospital.ru</li>
+                    <li><i class="fas fa-map-pin"></i> Москва, ул. Пирогова, 15</li>
+                </ul>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
+
+<!-- ===== JAVASCRIPT (поведение страницы) ===== -->
+<script>
+    // Функция открытия модального окна (вызывается при клике на "Записаться")
+    function openModal(doctorName = '', serviceName = '') {
+        const modal = document.getElementById('appointmentModal');
+        // Если передали имя врача или услуги — показываем подсказку в окне
+        // Устанавливаем минимальную дату — сегодня (нельзя записаться в прошлое)
+        // Показываем окно и запрещаем прокрутку фона
+    }
+
+    // Функция закрытия модального окна
+    function closeModal() {
+        // Скрываем окно, возвращаем прокрутку, очищаем форму и ошибки
+    }
+
+    // Проверка телефона: должен быть +7 или 8 + 10 цифр
+    function validatePhone(phone) { ... }
+
+    // Отправка формы (когда нажали "Отправить заявку")
+    function submitAppointment(event) {
+        event.preventDefault(); // Чтобы страница не перезагружалась
+        // Проверяем все поля, показываем ошибки, если есть
+        // Если всё ок — выводим данные в консоль и показываем зелёное уведомление
+        // Закрываем окно
+    }
+
+    // При клике на затемнённый фон — закрываем окно
+    window.onclick = function(event) { ... }
+
+    // Когда страница загрузилась — добавляем маску для телефона (автоматически подставляет +7)
+    document.addEventListener('DOMContentLoaded', function() { ... });
+</script>
+
 </body>
 </html>
