@@ -1,125 +1,132 @@
+/* ===== СБРОС СТАНДАРТНЫХ СТИЛЕЙ БРАУЗЕРА ===== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0;        /* Убираем отступы у всех элементов */
+    padding: 0;       /* Убираем внутренние отступы у всех элементов */
+    box-sizing: border-box; /* Чтобы ширина элемента включала padding и border */
 }
 
+/* ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (CSS-КОНСТАНТЫ) ===== */
 :root {
-    --color-primary: #0B3B5C;
-    --color-secondary: #2C7DA0;
-    --color-accent: #4CB5AB;
-    --color-background: #F4F9FC;
-    --color-surface: #FFFFFF;
-    --color-text-primary: #1A2E3F;
-    --color-text-secondary: #4A6476;
-    --color-border: #D9E4EC;
-    --color-success: #2E7D32;
-    --color-error: #C62828;
+    /* ЦВЕТА */
+    --color-primary: #0B3B5C;       /* Основной цвет: тёмно-синий (шапка, кнопки) */
+    --color-secondary: #2C7DA0;     /* Вторичный цвет: голубой (акценты, ссылки) */
+    --color-accent: #4CB5AB;        /* Акцентный цвет: мятный (бейджики, подчёркивания) */
+    --color-background: #F4F9FC;    /* Цвет фона всей страницы (светло-голубой) */
+    --color-surface: #FFFFFF;       /* Цвет карточек и поверхностей (белый) */
+    --color-text-primary: #1A2E3F;  /* Основной цвет текста (тёмно-синий) */
+    --color-text-secondary: #4A6476; /* Второстепенный цвет текста (серо-голубой) */
+    --color-border: #D9E4EC;        /* Цвет рамок и границ */
+    --color-success: #2E7D32;       /* Зелёный для успешных уведомлений */
+    --color-error: #C62828;         /* Красный для ошибок */
 
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-headings: 'Roboto Slab', 'Times New Roman', serif;
+    /* ШРИФТЫ */
+    --font-main: 'Inter', sans-serif;        /* Основной шрифт для текста */
+    --font-headings: 'Roboto Slab', serif;   /* Шрифт для заголовков */
 
-    --space-xs: 0.5rem;
-    --space-sm: 1rem;
-    --space-md: 1.5rem;
-    --space-lg: 2rem;
-    --space-xl: 3rem;
+    /* ОТСТУПЫ */
+    --space-xs: 0.5rem;   /* 8px — маленький отступ */
+    --space-sm: 1rem;     /* 16px — небольшой отступ */
+    --space-md: 1.5rem;   /* 24px — средний отступ */
+    --space-lg: 2rem;     /* 32px — большой отступ */
+    --space-xl: 3rem;     /* 48px — очень большой отступ */
 
-    --border-radius: 12px;
-    --box-shadow: 0 4px 12px rgba(11, 59, 92, 0.08);
+    /* ОФОРМЛЕНИЕ */
+    --border-radius: 12px;              /* Скругление углов у карточек и кнопок */
+    --box-shadow: 0 4px 12px rgba(11, 59, 92, 0.08); /* Лёгкая тень */
 }
 
+/* ===== ОСНОВНЫЕ СТИЛИ ДЛЯ СТРАНИЦЫ ===== */
 body {
-    font-family: var(--font-main);
-    color: var(--color-text-primary);
-    background-color: var(--color-background);
-    line-height: 1.5;
-    font-size: 16px;
-    font-weight: 400;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    font-family: var(--font-main);      /* Используем шрифт Inter */
+    color: var(--color-text-primary);   /* Текст тёмно-синий */
+    background-color: var(--color-background); /* Фон светло-голубой */
+    line-height: 1.5;                   /* Высота строки для удобного чтения */
+    font-size: 16px;                   /* Базовый размер шрифта */
+    min-height: 100vh;                 /* Минимум на всю высоту экрана */
+    display: flex;                     /* Используем флекс для прижатия подвала */
+    flex-direction: column;            /* Элементы в колонку */
 }
 
-/* === ТИПОГРАФИКА И ИЕРАРХИЯ === */
+/* ===== ЗАГОЛОВКИ ===== */
 h1, h2, h3, h4 {
-    font-family: var(--font-headings);
+    font-family: var(--font-headings); /* Рубленый шрифт для заголовков */
     font-weight: 500;
     color: var(--color-primary);
     line-height: 1.2;
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-sm);    /* Отступ снизу 16px */
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.5rem;    /* 40px */
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.02em; /* Чуть сжимаем буквы для красоты */
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 2rem;      /* 32px */
     font-weight: 600;
 }
 
 h3 {
-    font-size: 1.5rem;
+    font-size: 1.5rem;    /* 24px */
 }
 
 h4 {
-    font-size: 1.25rem;
+    font-size: 1.25rem;   /* 20px */
     font-weight: 600;
-    font-family: var(--font-main);
+    font-family: var(--font-main); /* Для h4 используем обычный шрифт */
 }
 
+/* ===== ПАРАГРАФЫ И ССЫЛКИ ===== */
 p {
     margin-bottom: var(--space-sm);
-    color: var(--color-text-secondary);
+    color: var(--color-text-secondary); /* Второстепенный цвет для текста */
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+    text-decoration: none; /* Убираем подчёркивание у ссылок */
+    color: inherit;        /* Ссылка наследует цвет родителя */
 }
 
-/* === КОНТЕЙНЕР === */
+/* ===== КОНТЕЙНЕР (ОГРАНИЧИВАЕТ ШИРИНУ КОНТЕНТА) ===== */
 .container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 var(--space-lg);
+    max-width: 1280px;      /* Максимальная ширина 1280px */
+    margin: 0 auto;         /* Центрируем по горизонтали */
+    padding: 0 var(--space-lg); /* Отступы по бокам 32px */
     width: 100%;
 }
 
-/* === ХЕДЕР === */
+/* ===== ШАПКА САЙТА (ХЕДЕР) ===== */
 header {
-    background-color: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-surface); /* Белый фон */
+    border-bottom: 1px solid var(--color-border); /* Серая полоска снизу */
     padding: var(--space-sm) 0;
-    position: sticky;
+    position: sticky;       /* Прилипает к верху при прокрутке */
     top: 0;
-    z-index: 100;
+    z-index: 100;           /* Чтобы шапка была поверх другого контента */
     box-shadow: var(--box-shadow);
 }
 
+/* Содержимое шапки: логотип, меню, кнопка в одну строку */
 .header-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Логотип слева, меню справа */
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap;        /* На телефоне переносится */
     gap: var(--space-sm);
 }
 
 .logo h2 {
     margin-bottom: 0;
     font-size: 1.5rem;
-    color: var(--color-primary);
 }
 
 .logo p {
     margin-bottom: 0;
     font-size: 0.875rem;
-    color: var(--color-text-secondary);
 }
 
+/* Меню навигации */
 nav ul {
     display: flex;
     list-style: none;
@@ -130,27 +137,28 @@ nav ul {
 nav a {
     font-weight: 500;
     padding: var(--space-xs) 0;
-    border-bottom: 2px solid transparent;
+    border-bottom: 2px solid transparent; /* Прозрачная полоска для эффекта при наведении */
     transition: border-color 0.2s;
 }
 
+/* При наведении на пункт меню — появляется зелёная полоска */
 nav a:hover {
     border-bottom-color: var(--color-accent);
 }
 
+/* Активный пункт меню (текущая страница) — тёмно-синяя полоска */
 nav a.active {
     border-bottom-color: var(--color-primary);
     font-weight: 600;
 }
 
+/* Кнопка "Записаться" в шапке */
 .btn-appointment {
     background-color: var(--color-primary);
     color: white;
     padding: 0.6rem var(--space-md);
-    border-radius: 40px;
+    border-radius: 40px;    /* Сильно скруглённые углы */
     font-weight: 600;
-    font-size: 0.9rem;
-    transition: background-color 0.2s;
     border: none;
     cursor: pointer;
     display: inline-flex;
@@ -159,23 +167,24 @@ nav a.active {
 }
 
 .btn-appointment:hover {
-    background-color: var(--color-secondary);
+    background-color: var(--color-secondary); /* При наведении становится голубой */
 }
 
-/* === ОСНОВНОЙ КОНТЕНТ === */
+/* ===== ОСНОВНОЙ КОНТЕНТ ===== */
 main {
-    flex: 1;
+    flex: 1;               /* Растягивается, чтобы прижать подвал вниз */
     padding: var(--space-xl) 0;
 }
 
-/* === ФУТЕР === */
+/* ===== ПОДВАЛ (ФУТЕР) ===== */
 footer {
-    background-color: var(--color-primary);
+    background-color: var(--color-primary); /* Тёмно-синий фон */
     color: rgba(255, 255, 255, 0.8);
     padding: var(--space-lg) 0;
-    margin-top: auto;
+    margin-top: auto;       /* Прижимается к низу страницы */
 }
 
+/* Сетка футера — 4 колонки */
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -185,7 +194,6 @@ footer {
 .footer-col h4 {
     color: white;
     margin-bottom: var(--space-sm);
-    font-family: var(--font-headings);
 }
 
 .footer-col ul {
@@ -196,15 +204,11 @@ footer {
     margin-bottom: var(--space-xs);
 }
 
-.footer-col a {
-    transition: opacity 0.2s;
-}
-
 .footer-col a:hover {
-    opacity: 1;
     text-decoration: underline;
 }
 
+/* Копирайт в самом низу */
 .copyright {
     text-align: center;
     margin-top: var(--space-lg);
@@ -213,7 +217,9 @@ footer {
     font-size: 0.875rem;
 }
 
-/* === КОМПОНЕНТЫ === */
+/* ===== ПЕРЕИСПОЛЬЗУЕМЫЕ КОМПОНЕНТЫ ===== */
+
+/* Заголовок страницы (например, "Наши специалисты") */
 .page-header {
     margin-bottom: var(--space-xl);
     text-align: center;
@@ -222,10 +228,10 @@ footer {
 .page-header p {
     font-size: 1.2rem;
     max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
+/* Большая герой-секция на главной странице (с градиентом) */
 .hero-section {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
     color: white;
@@ -240,17 +246,13 @@ footer {
     color: white;
 }
 
+/* Кнопка внутри герой-секции — белая с синим текстом */
 .hero-section .btn-appointment {
     background-color: white;
     color: var(--color-primary);
-    margin-top: var(--space-sm);
-    display: inline-block;
 }
 
-.hero-section .btn-appointment:hover {
-    background-color: var(--color-background);
-}
-
+/* Сетка карточек (направления медицины) */
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -258,6 +260,7 @@ footer {
     margin: var(--space-lg) 0;
 }
 
+/* Одна карточка */
 .card {
     background-color: var(--color-surface);
     border-radius: var(--border-radius);
@@ -268,7 +271,7 @@ footer {
 }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-4px);    /* Приподнимается при наведении */
     box-shadow: 0 8px 24px rgba(11, 59, 92, 0.12);
 }
 
@@ -278,14 +281,7 @@ footer {
     margin-bottom: var(--space-sm);
 }
 
-.card h3 {
-    margin-bottom: var(--space-xs);
-}
-
-.card p {
-    margin-bottom: 0;
-}
-
+/* Кнопка с обводкой (например, "Записаться" у врачей и услуг) */
 .btn-outline {
     border: 1px solid var(--color-primary);
     color: var(--color-primary);
@@ -296,9 +292,6 @@ footer {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
 }
 
 .btn-outline:hover {
@@ -306,50 +299,25 @@ footer {
     color: white;
 }
 
-.btn-primary {
-    background-color: var(--color-primary);
-    color: white;
-    padding: 0.6rem var(--space-md);
-    border-radius: 40px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: background-color 0.2s;
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
+/* ===== АДАПТИВНОСТЬ (ПЛАНШЕТЫ И ТЕЛЕФОНЫ) ===== */
 
-.btn-primary:hover {
-    background-color: var(--color-secondary);
-}
-
-section {
-    margin-bottom: var(--space-xl);
-}
-
-hr {
-    border: none;
-    border-top: 1px solid var(--color-border);
-    margin: var(--space-xl) 0;
-}
-
-/* === АДАПТИВНОСТЬ === */
+/* Планшеты и телефоны (ширина меньше 768px) */
 @media (max-width: 768px) {
     h1 { font-size: 2rem; }
     h2 { font-size: 1.75rem; }
 
+    /* Шапка становится в колонку */
     .header-content {
         flex-direction: column;
         text-align: center;
     }
 
+    /* Меню по центру */
     nav ul {
-        gap: var(--space-sm);
         justify-content: center;
     }
 
+    /* Футер: 2 колонки вместо 4 */
     .footer-grid {
         grid-template-columns: 1fr 1fr;
     }
@@ -360,19 +328,22 @@ hr {
     }
 }
 
+/* Маленькие телефоны (ширина меньше 480px) */
 @media (max-width: 480px) {
     .footer-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Одна колонка */
     }
 }
-/* Добавьте в конец вашего style.css */
 
-/* Стили для приложения */
+/* ===== СТИЛИ ДЛЯ ВЕБ-ПРИЛОЖЕНИЯ (УПРАВЛЕНИЕ ЗАПИСЯМИ) ===== */
+
+/* Общий контейнер приложения */
 .app-container {
     max-width: 1400px;
     margin: 0 auto;
 }
 
+/* Карточки формы, панели управления и списка записей */
 .form-card, .controls-card, .appointments-list {
     background-color: var(--color-surface);
     border-radius: var(--border-radius);
@@ -382,6 +353,7 @@ hr {
     border: 1px solid var(--color-border);
 }
 
+/* Строка с несколькими полями формы (например, телефон и дата) */
 .form-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -389,6 +361,7 @@ hr {
     margin-bottom: var(--space-md);
 }
 
+/* Группа полей (лейбл + инпут) */
 .form-group {
     margin-bottom: var(--space-md);
 }
@@ -416,9 +389,10 @@ hr {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--color-secondary);
+    border-color: var(--color-secondary); /* Подсветка при фокусе */
 }
 
+/* Кнопка отправки формы (синяя) */
 .btn-submit {
     background-color: var(--color-primary);
     color: white;
@@ -427,7 +401,6 @@ hr {
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -437,6 +410,7 @@ hr {
     background-color: var(--color-secondary);
 }
 
+/* Кнопка отмены (серая) */
 .btn-cancel {
     background-color: #e0e7ed;
     color: var(--color-text-primary);
@@ -445,16 +419,13 @@ hr {
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .btn-cancel:hover {
     background-color: #cbd5e1;
 }
 
+/* Панель управления: поиск, фильтр, сортировка */
 .controls-row {
     display: flex;
     flex-wrap: wrap;
@@ -462,6 +433,7 @@ hr {
     align-items: flex-end;
 }
 
+/* Поле поиска с иконкой лупы */
 .search-box {
     flex: 2;
     min-width: 200px;
@@ -484,6 +456,7 @@ hr {
     font-size: 1rem;
 }
 
+/* Блоки фильтра и сортировки */
 .filter-box, .sort-box {
     flex: 1;
     min-width: 180px;
@@ -504,6 +477,7 @@ hr {
     background-color: white;
 }
 
+/* Сетка карточек записей */
 .appointments-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -511,6 +485,7 @@ hr {
     margin-top: var(--space-md);
 }
 
+/* Одна карточка записи */
 .appointment-card {
     background-color: var(--color-background);
     border-radius: var(--border-radius);
@@ -524,6 +499,7 @@ hr {
     box-shadow: var(--box-shadow);
 }
 
+/* Верхняя часть карточки: имя врача и бейджик */
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -538,6 +514,7 @@ hr {
     color: var(--color-primary);
 }
 
+/* Цветной бейджик с именем врача */
 .card-badge {
     background-color: var(--color-accent);
     color: white;
@@ -547,6 +524,7 @@ hr {
     font-weight: 500;
 }
 
+/* Тело карточки: телефон, дата, время */
 .card-body p {
     margin-bottom: 8px;
     font-size: 0.9rem;
@@ -560,27 +538,13 @@ hr {
     color: var(--color-secondary);
 }
 
+/* Кнопки редактирования и удаления */
 .card-actions {
     display: flex;
     gap: var(--space-sm);
     margin-top: var(--space-md);
     padding-top: var(--space-sm);
     border-top: 1px solid var(--color-border);
-}
-
-.btn-edit, .btn-delete {
-    flex: 1;
-    padding: 0.4rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: all 0.2s;
 }
 
 .btn-edit {
@@ -595,7 +559,7 @@ hr {
 
 .btn-delete {
     background-color: #fee2e2;
-    color: #dc2626;
+    color: #dc2626; /* Красный */
 }
 
 .btn-delete:hover {
@@ -603,22 +567,25 @@ hr {
     color: white;
 }
 
+/* Сообщение, когда нет записей */
 .placeholder-message {
     text-align: center;
     padding: var(--space-xl);
     color: var(--color-text-secondary);
-    grid-column: 1 / -1;
+    grid-column: 1 / -1; /* Растягивается на всю ширину сетки */
 }
 
+/* Кнопки внутри формы */
 .form-actions {
     display: flex;
     gap: var(--space-sm);
     margin-top: var(--space-md);
 }
 
+/* Адаптация для телефонов (панель управления и карточки) */
 @media (max-width: 768px) {
     .controls-row {
-        flex-direction: column;
+        flex-direction: column; /* Панель поиска и фильтров в столбик */
     }
 
     .filter-box, .sort-box {
@@ -626,6 +593,6 @@ hr {
     }
 
     .appointments-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Одна карточка на всю ширину */
     }
 }
